@@ -1,4 +1,6 @@
-class Data {
+const crypto = require('crypto');
+
+export class Data {
     private value;
 
     constructor(value) {
@@ -6,11 +8,26 @@ class Data {
     }
 
     public getValue() {
-        return new Promise(resolve => setTimeout(() => resolve(this.value), Math.floor(Math.random() * Math.floor(1000))));
+        return this.value;
+    }
+
+    public get sortIndex() {
+        //
+        // DO NOT MODIFY THIS FUNCTION
+        //
+        const hash = crypto.createHash('md5');
+        return new Promise(resolve => setTimeout(() => {
+            hash.update(String(this.value));
+            resolve(hash.digest('hex'));
+        }, this.generateRandomTimeout()));
+    }
+
+    private generateRandomTimeout() {
+        return Math.random() * 1000;
     }
 }
 
-class ListNode {
+export class ListNode {
     public elem: Data;
     public next: ListNode;
 
@@ -20,12 +37,12 @@ class ListNode {
     }
 }
 
-class LinkedList {
+export class LinkedList {
     private head: ListNode = null;
     private len = 0;
 
     public append(elem) {
-        let node = new ListNode(elem);
+        const node = new ListNode(elem);
         let current;
 
         if (this.head === null) {
@@ -62,16 +79,23 @@ class LinkedList {
         }
     }
 
-    public insert(elem, pos: Number): Boolean {
+    public toArray() {
+        const array = [];
+        let current = this.head;
+        while (current) {
+            array.push(current.elem.getValue())
+            current = current.next;
+        }
+        return array;
+    }
+
+    public each(callback: Function) {
         // Todo: implement this
     }
 
-    public each(callbackFn: Function) {
-        let current = this.head;
-        while (current) {
-            callbackFn.call(this, current.elem);
-            current = current.next;
-        }
+    public insert(elem, position: Number): boolean {
+        // Todo: implement this
+        return true;
     }
 
     public reverse() {
@@ -81,17 +105,6 @@ class LinkedList {
     public async sort() {
         // TODO: Implement this
     }
+
+
 }
-
-
-let t = new LinkedList();
-t.append(1);
-t.append(2); // Works fine
-t.append(0);
-//console.log(t); // LinkedList
-// t.removeAt(1);
-//console.log(t, 'tt', tt); // LinkedList, 'tt', 1
-t.insert(2, 2);
-
-t.sort();
-t.each(console.log);
