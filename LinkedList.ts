@@ -1,11 +1,11 @@
 class Data {
-    public value;
+    private value;
 
     constructor(value) {
         this.value = value;
     }
 
-    public filterFn() {
+    public getValue() {
         return new Promise(resolve => setTimeout(() => resolve(this.value), Math.floor(Math.random() * Math.floor(1000))));
     }
 }
@@ -62,64 +62,36 @@ class LinkedList {
         }
     }
 
-
     public insert(elem, pos: Number): Boolean {
-        if (pos > -1 && pos < this.len) {
-            let current = this.head;
-            let index = 0;
-            let previous;
-            let node = new ListNode(elem);
+        // Todo: implement this
+    }
 
-            if (pos === 0) {
-                node.next = current;
-                this.head = node;
-            } else {
-                while (index++ < pos) {
-                    previous = current;
-                    current = current.next;
-                }
-                node.next = current;
-                previous.next = node;
-            }
-            this.len++;
-            return true;
-        } else {
-            return false;
+    public each(callbackFn: Function) {
+        let current = this.head;
+        while (current) {
+            callbackFn.call(this, current.elem);
+            current = current.next;
         }
     }
 
-    public toString(): String {
-        let current = this.head;
-        let str = '';
-        while (current) {
-            str += current.elem; //output is undefinedundefinedundefined
-            // str += JSON.stringify(current);
-            // prints out {"next":{"next":{}}}{"next":{}}{}
-            current = current.next;
-        }
-        return str;
+    public reverse() {
+        // TODO: Implement this
     }
 
     public async sort() {
-        let current = this.head;
-        while (current.next) {
-            console.log(await current.elem.filterFn());
-            current = current.next;
-        }
+        // TODO: Implement this
     }
 }
 
 
 let t = new LinkedList();
-t.append('asd'); // Works fine
 t.append(1);
+t.append(2); // Works fine
 t.append(0);
-console.log(t); // LinkedList
-let tt = t.removeAt(1);
-console.log(t, 'tt', tt); // LinkedList, 'tt', 1
-t.insert('asd', 2);
-let ttt = t.insert( 'a', 1);
-// console.log(ttt); // true
-// console.log(t); // LinkedList
-// console.log(t.toString()); //asda0
+//console.log(t); // LinkedList
+// t.removeAt(1);
+//console.log(t, 'tt', tt); // LinkedList, 'tt', 1
+t.insert(2, 2);
+
 t.sort();
+t.each(console.log);
