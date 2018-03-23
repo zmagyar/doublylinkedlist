@@ -47,7 +47,7 @@ improve code coverage by testing more use cases.
 The Deliverable
 ---------------
 
-Once you've finished the code test then commit your modifications to your local master branch (you do not need push your changes), and create a `bundle` of your repository, and send the git bundle file to `adam.k@powerednow.com`
+Once you've finished the code test then commit your modifications to your local master branch (you do not need push your changes), and create a `bundle` of your repository, and send the git bundle file to adam.k@powerednow.com
 
     git bundle create <whatever>.bundle --all —branches
 
