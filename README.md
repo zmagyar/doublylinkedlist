@@ -12,8 +12,7 @@ You'll have to see the failing tests which you'll have to make succeed.
 
 
 Your task is to finish the implementation of the public methods:
-`each`, `insert`, `reverse`, `sort`. There are different levels, you don't have to
-impolement all the functions.
+`each`, `insert`, `reverse`, `sort`. There are different levels as listed below. We are accepting partial solutions as well. So you can send your solution to us even if just a few of the tasks below completed.
 
 
 Basic - each(callback)
@@ -41,14 +40,14 @@ Extra
 -----
 
 You can find tests for all the methods. As an extra challenge, you can extend these tests to
-cover more use cases.
+improve code coverage by testing more use cases.
 
 
 
 The Deliverable
 ---------------
 
-Once you've finished the code test and committed your modifications to the master branch, just create a `bundle` of your repository, and send the git bundle file to `adam.k@powerednow.com`
+Once you've finished the code test then commit your modifications to your local master branch (you do not need push your changes), and create a `bundle` of your repository, and send the git bundle file to `adam.k@powerednow.com`
 
     git bundle create <whatever>.bundle --all —branches
 
