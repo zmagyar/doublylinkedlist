@@ -36,4 +36,10 @@ You can find tests for all the methods. As an extra challenge, you can extend th
 cover more use cases.
 
 
+Once you've finished the code test and committed your modifications, just create a `bundle` of your repository, and send the bundle file to `adam.k@powerednow.com`
+
+    git bundle create <anything>.bundle --all —branches
+
+
 If you have any question, just drop an email to us: adam.k@powerednow.com, steve@powerednow.com
+
