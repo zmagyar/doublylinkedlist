@@ -3,6 +3,14 @@ PoweredNow Coding Test
 
 We have prepared a linked list implementation in `TypeScript`.
 
+Once you've cloned the repository all you need to do is:
+
+    npm install
+    npm run test
+
+You'll have to see the failing tests which you'll have to make succeed.
+
+
 Your task is to finish the implementation of the public methods:
 `each`, `insert`, `reverse`, `sort`. There are different levels, you don't have to
 impolement all the functions.
@@ -13,8 +21,8 @@ Basic - each(callback)
 This method should call the `callback` function with each item of the list. (Similar to `Array.each`)
 
 
-Basic - insert(elem, position)
-------------------------------
+Intermediate - insert(elem, position)
+-------------------------------------
 This method should insert a new item into the linked list at a given position.
 
 
