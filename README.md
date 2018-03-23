@@ -3,7 +3,7 @@ PoweredNow Coding Test
 
 We have prepared a linked list implementation in `TypeScript`.
 
-Your task is to finish the implementation of all the public methods:
+Your task is to finish the implementation of the public methods:
 `each`, `insert`, `reverse`, `sort`. There are different levels, you don't have to
 impolement all the functions.
 
