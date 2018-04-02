@@ -25,7 +25,7 @@ describe('LinkedList methods', () => {
 
         list.append('a');
         list.append('b');
-
+        
         expect(list.toArray()).toEqual(['a', 'b'])
     });
 
@@ -57,6 +57,24 @@ describe('LinkedList methods', () => {
 
     });
 
+    it('should sort method sort items by sortIndex (md5)', async () => {
+        const list = generateList('aaa', 'bbb', 'ccc', 'Abc');
+
+        await list.sort();
+
+        expect(list.toArray()).toEqual(['bbb', 'Abc', 'aaa', 'ccc']);
+
+        //
+        // Because sortIndex for the values will be the followings:
+        //
+        // aaa 47bce5c74f589f4867dbd57e9ca9f808
+        // bbb 08f8e0260c64418510cefb2b06eee5cd
+        // ccc 9df62e693988eb4e1e1444ece0578579
+        // Abc 35593b7ce5020eae3ca68fd5b6f3e031
+        //
+
+    });
+
     it('should insert method work (insert item to specific position)', function () {
         const list = generateList('a', 'b', 'c');
 
@@ -65,6 +83,14 @@ describe('LinkedList methods', () => {
         expect(list.toArray()).toEqual(['a', 'b', 'A', 'c']);
     });
 
+    it('should insert method work (insert itom to first position)', function () {
+        const list = generateList('a', 'b', 'c');
+
+        list.insert('A', 0);
+
+        expect(list.toArray()).toEqual(['A', 'a', 'b', 'c']);
+    });
+    
     it('should reverse method work (reverse the order of the list)', function () {
         const list = generateList('x', 'z', 'y', 'w');
 
