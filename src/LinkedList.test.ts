@@ -1,4 +1,4 @@
-import { LinkedList, ListNode, Data } from './LinkedList';
+import { LinkedList, ListNode, Data} from './LinkedList';
 
 describe('Data methods', () => {
     it('should sortIndex asynchronously generate md5 hash', async () => {
@@ -20,16 +20,42 @@ describe('LinkedList methods', () => {
         return list;
     };
 
+    it('tail should point at last item', () => {
+        const list = new LinkedList();
+        expect(list.getTail(true)).toEqual(null);
+        list.append('a');
+        list.append('b');
+
+        expect(list.getTail(true)).toEqual('b');
+        list.append('c');
+        expect(list.getTail(true)).toEqual('c');
+
+    });
+
+    it('should search through tail as well', () => {
+        const list = new LinkedList();
+        list.append('a');
+        list.append('b');
+        list.append('c');
+        list.append('d');
+
+        expect(list.getTail().previous.previous).toEqual(list.getElement(1));
+        expect(list.getTail().previous.previous.previous).toEqual(list.getHead());
+        list.removeAt(3);
+        expect(list.getTail()).toEqual(list.getElement(2));
+
+    });
+
     it('should append method work (add item to the end of the list)', () => {
         const list = new LinkedList();
 
         list.append('a');
         list.append('b');
-        
+
         expect(list.toArray()).toEqual(['a', 'b'])
     });
 
-    it('should each method work (call the callback on each item)', function () {
+    it('should each method work (call the callback on each item)', () => {
         const list = generateList('a', 'b');
         const mockCallback = jest.fn();
 
@@ -75,7 +101,7 @@ describe('LinkedList methods', () => {
 
     });
 
-    it('should insert method work (insert item to specific position)', function () {
+    it('should insert method work (insert item to specific position)', () => {
         const list = generateList('a', 'b', 'c');
 
         list.insert('A', 2);
@@ -83,15 +109,30 @@ describe('LinkedList methods', () => {
         expect(list.toArray()).toEqual(['a', 'b', 'A', 'c']);
     });
 
-    it('should insert method work (insert itom to first position)', function () {
+    it('should insert method work (insert item to first position, middle, and last)', () => {
         const list = generateList('a', 'b', 'c');
 
         list.insert('A', 0);
-
         expect(list.toArray()).toEqual(['A', 'a', 'b', 'c']);
+        expect(list.getElement(1).previous).toEqual(list.getHead());
+
+        list.insert('B', 2);
+        expect(list.toArray()).toEqual(['A', 'a', 'B', 'b', 'c']);
+        expect(list.getElement(2).previous).toEqual(list.getElement(1));
+
+        list.insert('D', 5);
+        expect(list.toArray()).toEqual(['A', 'a', 'B', 'b', 'c', 'D']);
+        expect(list.getElement(5).previous).toEqual(list.getElement(4));
+
+        expect(list.getTail()).toEqual(list.getElement(5));
     });
-    
-    it('should reverse method work (reverse the order of the list)', function () {
+
+    it('test length', () => {
+        const list = generateList(1,2,3,4,5);
+        expect(list.getLen()).toEqual(5);
+    });
+
+    it('should reverse method work (reverse the order of the list)', () => {
         const list = generateList('x', 'z', 'y', 'w');
 
         list.reverse();
@@ -99,7 +140,7 @@ describe('LinkedList methods', () => {
         expect(list.toArray()).toEqual(['w', 'y', 'z', 'x']);
     });
 
-    it('should removeAt method work (remove item from given position)', function () {
+    it('should removeAt method work (remove item from given position)', () => {
         const list = generateList('a', 'b', 'z', 'x');
 
         list.removeAt(1);
@@ -111,5 +152,44 @@ describe('LinkedList methods', () => {
         list.removeAt(1);
         expect(list.toArray()).toEqual(['z']);
     });
+
+    it("should give desired item's data", () => {
+        const list = generateList('first', 'second', 'third');
+
+        expect(list.getElement(1, true)).toEqual('second');
+        expect(list.getElement(3, true)).toBeFalsy();
+        expect(list.getElement(1000, true)).toBeFalsy();
+    });
+
+    it('should match previous', () => {
+        const list = generateList('first', 'second', 'third');
+
+        expect(list.getElement(1)).toEqual(list.getElement(2).previous);
+    });
+
+    it('get head value', () => {
+        const list = generateList('x', 'c', 'v');
+
+        expect(list.getHead(true)).toEqual('x');
+    });
+
+    it('if no current getElement should be false', () => {
+        const list = generateList('x', 'c', 'v');
+
+        expect(list.getElement(9)).toBeFalsy();
+    });
+
+    it('insert should throw', () => {
+        const list = generateList('1');
+
+        expect(() => list.insert('2', -100)).toThrow()
+    });
+
+    it('remove should throw', () => {
+        const list = generateList('1');
+
+        expect(() => list.removeAt(-100)).toThrow()
+    });
+
 });
 
