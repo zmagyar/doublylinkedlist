@@ -44,63 +44,107 @@ export class LinkedList {
     private tail: ListNode = null;
     private len = 0;
 
-    public getHead(value = false) {
-        if (value) return this.head && this.head.elem.getValue();
+    /**
+     * Get the head node
+     *
+     * @returns {ListNode}
+     */
+    public getHead(): ListNode {
         return this.head;
     }
 
-    public getTail(value = false) {
-        if (value) return this.tail && this.tail.elem.getValue();
+    /**
+     * Get the tail node
+     *
+     * @returns {ListNode}
+     */
+    public getTail(): ListNode {
         return this.tail;
     }
 
-    public append(elem) {
+    /**
+     * Get the value of the head node
+     *
+     * @returns {Data}
+     */
+    public getHeadValue(): Data {
+        return this.head && this.head.elem.getValue();
+    }
+
+    /**
+     * Get the value of the tail node
+     *
+     * @returns {Data}
+     */
+    public getTailValue(): Data {
+        return this.tail && this.tail.elem.getValue();
+    }
+
+    /**
+     * Append the list by adding a new node to the end of the list
+     *
+     * @param elem
+     * @returns {ListNode}
+     */
+    public append(elem): ListNode {
         const node = new ListNode(elem);
-        let current;
         if (this.head === null) {
             this.head = node;
             this.tail = node;
         } else {
-            current = this.head;
-            while (current.next) {
-                current = current.next;
-            }
-            current.next = node;
-            current.next.previous = current;
-            this.tail = current.next
+            node.previous = this.tail;
+            this.tail.next = node;
+            this.tail = node;
         }
         this.len++;
+        return node;
     }
 
+    /**
+     * Remove a node at the given position
+     *
+     * @param {Number} pos
+     * @returns {Data}
+     */
     public removeAt(pos: Number): Data {
         let current = this.getElement(pos);
         if (!current) throw new Error();
-        if (pos === 0) {
-            this.head = current.next;
-            this.len--;
-            return current.elem;
+
+        const previous = current.previous;
+        const next = current.next;
+        if (previous === null) {
+            this.head = next;
+        } else {
+            previous.next = next;
+            if (next === null) {
+                this.tail = previous;
+            } else {
+                next.previous = previous;
+            }
         }
-        current.previous.next = current.next;
-        if (current.next === null)  {
-            this.len--;
-            this.tail = current.previous;
-            return current.elem
-        }
-        current.next.previous = current.previous;
         this.len--;
         return current.elem
     }
 
-    public toArray() {
+    /**
+     * Conver the list to an array of the stored values
+     *
+     * @returns {any[]}
+     */
+    public toArray(): any[] {
         const array = [];
-        let current = this.head;
-        while (current) {
-            array.push(current.elem.getValue());
-            current = current.next;
-        }
+        this.each((item) => {
+            array.push(item.getValue());
+        });
         return array;
     }
 
+    /**
+     * Execute the passed in callback function for each
+     * node stored in the list
+     *
+     * @param {Function} callback
+     */
     public each(callback: Function) {
         let current = this.head;
         while (current) {
@@ -109,11 +153,17 @@ export class LinkedList {
         }
     }
 
-    public insert(elem, pos: Number): boolean {
+    /**
+     * Insert a new node to the given position of the list
+     * Returns the inserted node value
+     *
+     * @param elem
+     * @param {Number} pos
+     * @returns {ListNode}
+     */
+    public insert(elem, pos: Number): ListNode {
         if (pos >= this.getLen()) {
-            this.len++;
-            this.append(elem);
-            return true;
+            return this.append(elem);
         }
         const node = new ListNode(elem);
         let current = this.getElement(pos);
@@ -124,7 +174,7 @@ export class LinkedList {
             node.next = current;
             current.previous = node;
             this.len++;
-            return true;
+            return node;
         }
         this.len++;
         node.previous = current.previous;
@@ -132,10 +182,13 @@ export class LinkedList {
 
         current.previous = node;
         node.next = current;
-        return true;
+        return node;
     }
 
-    public reverse() {
+    /**
+     * Reverse the list
+     */
+    public reverse(): void {
         let current = this.head;
         let save;
 
@@ -147,6 +200,11 @@ export class LinkedList {
         [this.head, this.tail] = [this.tail, this.head];
     }
 
+    /**
+     * Sort the list
+     *
+     * @returns {Promise<void>}
+     */
     public async sort() {
         let newList = new LinkedList();
         let array = [];
@@ -165,10 +223,16 @@ export class LinkedList {
         this.head = newList.head;
     }
 
-    public getElement(position, value = false) {
+    /**
+     * Get the node at the given position
+     *
+     * @param position
+     * @returns {ListNode}
+     */
+    public getElement(position): ListNode {
         if (position > this.getLen() ||
             position < 0 || position === null ||
-            position === undefined) return false;
+            position === undefined) return null;
 
         let index = 0;
         let current = this.head;
@@ -178,13 +242,27 @@ export class LinkedList {
             current = current.next;
         }
 
-        if (current === null) return false;
-        if (value) return current.elem.getValue();
-        return current
+        return current;
     }
 
-    public getLen() {
-        return this.len
+    /**
+     * Return the value of the element at the given position
+     *
+     * @param position
+     * @returns {ListNode | any}
+     */
+    getElementValue(position) {
+        const node = this.getElement(position);
+        return node && node.elem.getValue();
+    }
+
+    /**
+     * Get the length of the list
+     *
+     * @returns {Number}
+     */
+    public getLen(): Number {
+        return this.len;
     }
 
 }

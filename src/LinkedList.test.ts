@@ -22,13 +22,13 @@ describe('LinkedList methods', () => {
 
     it('tail should point at last item', () => {
         const list = new LinkedList();
-        expect(list.getTail(true)).toEqual(null);
+        expect(list.getTailValue()).toEqual(null);
         list.append('a');
         list.append('b');
 
-        expect(list.getTail(true)).toEqual('b');
+        expect(list.getTailValue()).toEqual('b');
         list.append('c');
-        expect(list.getTail(true)).toEqual('c');
+        expect(list.getTailValue()).toEqual('c');
 
     });
 
@@ -115,14 +115,17 @@ describe('LinkedList methods', () => {
         list.insert('A', 0);
         expect(list.toArray()).toEqual(['A', 'a', 'b', 'c']);
         expect(list.getElement(1).previous).toEqual(list.getHead());
+        expect(list.getLen()).toEqual(4);
 
         list.insert('B', 2);
         expect(list.toArray()).toEqual(['A', 'a', 'B', 'b', 'c']);
         expect(list.getElement(2).previous).toEqual(list.getElement(1));
+        expect(list.getLen()).toEqual(5);
 
         list.insert('D', 5);
         expect(list.toArray()).toEqual(['A', 'a', 'B', 'b', 'c', 'D']);
         expect(list.getElement(5).previous).toEqual(list.getElement(4));
+        expect(list.getLen()).toEqual(6);
 
         expect(list.getTail()).toEqual(list.getElement(5));
     });
@@ -156,9 +159,9 @@ describe('LinkedList methods', () => {
     it("should give desired item's data", () => {
         const list = generateList('first', 'second', 'third');
 
-        expect(list.getElement(1, true)).toEqual('second');
-        expect(list.getElement(3, true)).toBeFalsy();
-        expect(list.getElement(1000, true)).toBeFalsy();
+        expect(list.getElementValue(1)).toEqual('second');
+        expect(list.getElementValue(3)).toBeFalsy();
+        expect(list.getElementValue(1000)).toBeFalsy();
     });
 
     it('should match previous', () => {
@@ -170,7 +173,7 @@ describe('LinkedList methods', () => {
     it('get head value', () => {
         const list = generateList('x', 'c', 'v');
 
-        expect(list.getHead(true)).toEqual('x');
+        expect(list.getHeadValue()).toEqual('x');
     });
 
     it('if no current getElement should be false', () => {
